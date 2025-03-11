@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weight Loss Website</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            background: #f4f4f4;
+            margin: 0;
+        }
+
+        /* Header */
+        header {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        
+
+        /* Fitness Ring Section */
+        .fitness-ring {
+            margin-top: 30px;
+        }
+
+        .fitness-ring img {
+            width: 200px;
+            height: auto;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Header with Navigation and Login -->
+    <header>
+        <h1>seeing beyond the scales</h1>
+        <ul class="nav-links">
+            <li><a onclick="openNewTab('meal-plan')">services </a></li>
+            <li><a onclick="openNewTab('fitness-guide')">Fitness Guide</a></li>
+            <li><a onclick="openNewTab('steps-counter')">Step Counter</a></li>
+            <li><a onclick="openNewTab('ai-coach')">AI Coach</a></li>
+        </ul>
+        <div class="auth">
+            <a href="signup.html"><button>Login / Sign Up</button></a>
+
+        </div>
+    </header>
+
+    <!-- Fitness Ring -->
+    <section class="fitness-ring">
+        <h2>Your Fitness Progress partner</h2>
+        <img src=" your-fitness-ring-image.png"
+         alt="Fitness Ring (Replace with Your Image)">
+    </section>
+
+   
+</head>
+<body>
+    
+
+    <script>
+        
+        // Open New Tab for Sections
+        function openNewTab(page) {
+            let url;
+            if (page === 'meal-plan') {
+                url = "mealplan.html";
+            } else if (page === 'fitness-guide') {
+                url = "fitnessguide.html";
+            } else if (page === 'steps-counter') {
+                url = "stepscounter.html";
+                
+            } else if (page === 'ai-coach') {
+                url = "aicoach.html";
+                 
+            }
+            
+            window.open(url, "_blank");
+        }
+
+       
+        
+        
+    </script>
+
+</body>
+</html>
