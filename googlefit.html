@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Guide with Google Fit</title>
+    <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+
+    <h1>🏋️ Fitness Guide</h1>
+    <button onclick="authorizeGoogleFit()">Connect Google Fit</button>
+
+    <h2>📊 Live Fitness Data</h2>
+    <p>🔥 Steps: <span id="steps">0</span></p>
+    <p>⚡ Calories Burned: <span id="calories">0</span> kcal</p>
+
+    <script>
+        function authorizeGoogleFit() {
+            gapi.load('client:auth2', function() {
+                gapi.auth2.init({
+                    client_id: 'YOUR_GOOGLE_CLIENT_ID',
+                    scope: 'https://www.googleapis.com/auth/fitness.activity.read'
+                }).then(function() {
+                    gapi.auth2.getAuthInstance().signIn().then(getFitnessData);
+                });
+            });
+        }
+
+        function getFitnessData() {
+            gapi.client.request({
+                path: 'https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate',
+                method: 'POST',
+                body: {
+                    "aggregateBy": [{
+                        "dataTypeName": "com.google.step_count.delta"
+                    }, {
+                        "dataTypeName": "com.google.calories.expended"
+                    }],
+                    "bucketByTime": { "durationMillis": 86400000 },
+                    "startTimeMillis": Date.now() - (24 * 60 * 60 * 1000),
+                    "endTimeMillis": Date.now()
+                }
+            }).then(response => {
+                let steps = response.result.bucket[0]?.dataset[0]?.point[0]?.value[0]?.intVal || 0;
+                let calories = response.result.bucket[0]?.dataset[1]?.point[0]?.value[0]?.fpVal || 0;
+
+                document.getElementById("steps").innerText = steps;
+                document.getElementById("calories").innerText = Math.round(calories);
+            });
+        }
+    </script>
+
+</body>
+</html>

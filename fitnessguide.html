@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background:#28a745 ;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+        }
+
+        .workout-section {
+            margin: 20px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #exercise-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exercise-item {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .exercise-item:hover {
+            background: #90caf9;
+        }
+
+        .calories-counter {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🏋️‍♂️ Fitness Guide</h1>
+        <p>Click an exercise to log calories burned!</p>
+    </header>
+
+    <section class="workout-section">
+        <h2>Choose an Exercise</h2>
+        <ul id="exercise-list">
+            <li class="exercise-item" data-calories="50">🏃‍♂️ Running - 50 kcal</li>
+            <li class="exercise-item" data-calories="30">🤸‍♂️ Jumping Jacks - 30 kcal</li>
+            <li class="exercise-item" data-calories="40">🦵 Squats - 40 kcal</li>
+            <li class="exercise-item" data-calories="25">🚶 Walking - 25 kcal</li>
+            <li class="exercise-item" data-calories="45">💪 Push-Ups - 45 kcal</li>
+        </ul>
+    </section>
+
+    <section class="calories-counter">
+        <h2>🔥 Calories Burned: <span id="calories-burned">0</span> kcal</h2>
+        <button onclick="resetCalories()">Reset Counter</button>
+    </section>
+
+    <script>
+        let totalCalories = 0;
+
+        document.querySelectorAll('.exercise-item').forEach(item => {
+            item.addEventListener('click', function() {
+                let calories = parseInt(this.getAttribute("data-calories"));
+                totalCalories += calories;
+                document.getElementById("calories-burned").innerText = totalCalories;
+            });
+        });
+
+        function resetCalories() {
+            totalCalories = 0;
+            document.getElementById("calories-burned").innerText = totalCalories;
+        }
+    </script>
+
+</body>
+</html>
