@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>steps counter</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <!-- Chart.js for Graph -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            font-size: 24px;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🚶 Step Counter & Weekly Progress</h1>
+        
+    </header>
+
+    <section id="step-counter">
+        <h2>Live Step Count</h2>
+        <p>👣 Steps Today: <span id="step-count">0</span></p>
+    </section>
+
+    <section id="weekly-table">
+        <h2>📅 Weekly Steps Overview</h2>
+        <table>
+            <tr>
+                <th>Day</th>
+                <th>Steps Taken</th>
+            </tr>
+            <tr><td>Monday</td><td id="mon">0</td></tr>
+            <tr><td>Tuesday</td><td id="tue">0</td></tr>
+            <tr><td>Wednesday</td><td id="wed">0</td></tr>
+            <tr><td>Thursday</td><td id="thu">0</td></tr>
+            <tr><td>Friday</td><td id="fri">0</td></tr>
+            <tr><td>Saturday</td><td id="sat">0</td></tr>
+            <tr><td>Sunday</td><td id="sun">0</td></tr>
+        </table>
+
+        <h3>🔢 Weekly Average: <span id="weekly-average">0</span> Steps</h3>
+    </section>
+
+    <section id="graph">
+        <h2>📊 Steps Trend</h2>
+        <canvas id="stepChart"></canvas>
+    </section>
+
+    <script>
+        let stepCount = 0;
+        let weekSteps = [0, 0, 0, 0, 0, 0, 0]; // Stores steps for each day
+        let currentDay = new Date().getDay() - 1; // Convert to array index (Monday = 0)
+
+        // Simulated step tracking (Replace with real health app integration)
+        function simulateSteps() {
+            stepCount += Math.floor(Math.random() * 10); // Simulate steps
+            document.getElementById("step-count").innerText = stepCount;
+        }
+        setInterval(simulateSteps, 3000); // Update every 3 seconds
+
+        // Update weekly table with step data
+        function updateTable() {
+            weekSteps[currentDay] = stepCount;
+            document.getElementById("mon").innerText = weekSteps[0];
+            document.getElementById("tue").innerText = weekSteps[1];
+            document.getElementById("wed").innerText = weekSteps[2];
+            document.getElementById("thu").innerText = weekSteps[3];
+            document.getElementById("fri").innerText = weekSteps[4];
+            document.getElementById("sat").innerText = weekSteps[5];
+            document.getElementById("sun").innerText = weekSteps[6];
+
+            // Calculate weekly average
+            let sum = weekSteps.reduce((a, b) => a + b, 0);
+            let avg = Math.round(sum / 7);
+            document.getElementById("weekly-average").innerText = avg;
+
+            // Update chart
+            updateChart(weekSteps);
+        }
+
+        // Function to update the graph
+        function updateChart(weekSteps) {
+            let ctx = document.getElementById("stepChart").getContext("2d");
+            new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                    datasets: [{
+                        label: "Steps Taken",
+                        data: weekSteps,
+                        borderColor: "#28a745",
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Save steps and update every 5 seconds (simulating real-time tracking)
+        setInterval(updateTable, 5000);
+    </script>
+
+</body>
+</html>

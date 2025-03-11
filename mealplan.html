@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Meal Plan with Calorie Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            color: #27ae60;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #27ae60;
+            color: white;
+        }
+        .calories {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+    
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Personalized Meal Plan</h2>
+        <label for="diet">Choose Your Diet Type:</label>
+        <select id="diet">
+            <option value="balanced">Balanced Diet</option>
+            <option value="regular">regular</option>
+            <option value="vegan">Vegan</option>
+            <option value="high-protein">High Protein</option>
+        </select>
+        <button onclick="generateMealPlan()">Generate Plan</button>
+
+        <table id="mealPlanTable">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Breakfast</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                    <th>Total Calories</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Meals will be generated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const meals = {
+            balanced: {
+                Monday: [
+                    { meal: "Oatmeal & Berries", calories: 30 },
+                    { meal: "Grilled Chicken Salad", calories: 450 },
+                    { meal: "Salmon & Quinoa", calories: 500 }
+                ],
+                Tuesday: [
+                    { meal: "Egg & Toast", calories: 50 },
+                    { meal: "Turkey Sandwich", calories: 500 },
+                    { meal: "Stir-fried Veggies & Rice", calories: 480 }
+                ],
+                wednesday: [
+                    { meal: "coffee", calories: 50 },
+                    { meal: "Turkey Sandwich", calories: 50},
+                    { meal: "fruits and smoothie", calories: 80 }
+                ],
+                thursday: [
+                    { meal: "cow peas and rice", calories: 30 },
+                    { meal: "beef Sandwich", calories: 500 },
+                    { meal: "chapati and beans", calories: 480 }
+                ],
+                friday: [
+                    { meal: "tea and mandazi", calories: 30 },
+                    { meal: "veggies ", calories: 50 },
+                    { meal: "minced meat and rice", calories: 480 }
+                ],
+                saturday: [
+                    { meal: "passion juice and a slice of cake", calories: 350 },
+                    { meal:"protein shake", calories: 500 },
+                    { meal: "Veggies& Rice", calories: 480 }
+                ], 
+            sunday: [
+                    { meal: "strawberry milk", calories: 30 },
+                    { meal: "milkshake", calories: 500 },
+                    { meal: "cow liver and beef", calories: 480 }
+                ],
+                
+            },
+            regular: {
+                Monday: [
+                    { meal: "Scrambled Eggs & Avocado", calories: 40 },
+                    { meal: "rice and veggies", calories: 500 },
+                    { meal: "Salmon & Spinach", calories: 550 }
+                ],
+                Tuesday: [
+                    { meal: "brown bread", calories: 38 },
+                    { meal: " Noodles & Pesto", calories: 45 },
+                    { meal: "Steak & Roasted rice", calories: 600 }
+                ],
+                thursday: [
+                    { meal: " Pancakes", calories: 38},
+                    { meal: "Zucchini rice& carrots", calories: 45 },
+                    { meal: "fish and ugali", calories: 600 }
+                ],
+                friday: [
+                    { meal: " oats and banana", calories: 30 },
+                    { meal: "mango juice", calories: 50 },
+                    { meal: "fried rice and beans", calories: 600 }
+                ],
+                saturday: [
+                    { meal: "Pancakes", calories: 30 },
+                    { meal: "banana juice", calories: 50 },
+                    { meal: "carrot and potato rice", calories: 600 }
+                ],
+                sunday: [
+                    { meal: "weetabix", calories: 30 },
+                    { meal: "hibiscus tea", calories: 40 },
+                    { meal: "noodles ", calories: 60 }
+                ],
+                
+                
+                
+
+            },
+            vegan: {
+                Monday: [
+                    { meal: "Chia Pudding", calories: 320 },
+                    { meal: "Lentil Soup", calories: 400 },
+                    { meal: "Grilled Tofu & Quinoa", calories: 480 }
+                ],
+                Tuesday: [
+                    { meal: "Green Smoothie", calories: 30},
+                    { meal: "Chickpea Salad", calories: 42},
+                    { meal: "Stuffed Bell Peppers", calories: 450 }
+                ],
+                wednesday: [
+                    { meal: "cornflakes", calories: 380 },
+                    { meal: "cabbage salad", calories: 45},
+                    { meal: "spicy cabage and ugali ", calories: 600 }
+                ],
+                thursday: [
+                    { meal: "weetabix", calories: 380 },
+                    { meal: "watermelon and banana smothie", calories: 450 },
+                    { meal: " Roasted Asparagus", calories: 600 }
+                ], 
+                friday: [
+                    { meal: "shapies", calories: 380 },
+                    { meal: "green tea", calories: 450 },
+                    { meal: "rice & Roasted peanuts", calories: 600 }
+                ],
+                saturday: [
+                    { meal: "cerelac", calories: 380 },
+                    { meal: "passion fruit and mango smoothie", calories: 450 },
+                    { meal: "veggies and ugali", calories: 600 }
+                ],
+                sunday: [
+                    { meal: "tea and mandazi", calories: 380 },
+                    { meal: "orange juice", calories: 450 },
+                    { meal: "rice and beans", calories: 600 }
+                ],
+
+            },
+            "high-protein": {
+                Monday: [
+                    { meal: "Scrambled Eggs & Chicken", calories: 450 },
+                    { meal: "Grilled Salmon & Rice", calories: 500 },
+                    { meal: "Beef Stir-fry", calories: 550 }
+                ],
+                Tuesday: [
+                    { meal: "Protein Shake & Nuts", calories: 350 },
+                    { meal: "Tuna Salad", calories: 480 },
+                    { meal: "Turkey & Sweet Potatoes", calories: 520 }
+                ],
+                wednesday: [
+                    { meal: "milk ", calories: 350 },
+                    { meal: "milkshakes", calories: 480 },
+                    { meal: " Sweet Potatoes", calories: 520 }
+                ],
+                thursday: [
+                    { meal: " Shake ", calories: 350 },
+                    { meal: "fries and Salad", calories: 480 },
+                    { meal: "minced meat and rice", calories: 520 }
+                ],
+                friday: [
+                    { meal: "tea and bread", calories: 350 },
+                    { meal: "shakes", calories: 480 },
+                    { meal: "liver and rice", calories: 520 }                                                                               
+                ],
+                saturday: [
+                    { meal: "cocoa tea ", calories: 350 },
+                    { meal: "sausages ", calories: 480 },
+                    { meal: "ugali matumbo", calories: 520 }
+                ],
+                sunday: [
+                    { meal: "coffee", calories: 350 },
+                    { meal: "lettuce Salad", calories: 480 },
+                    { meal: "Turkey wraps", calories: 520 }
+                ],
+            }
+        };
+
+        function generateMealPlan() {
+            let selectedDiet = document.getElementById("diet").value;
+            let mealPlanTable = document.getElementById("mealPlanTable").getElementsByTagName('tbody')[0];
+            mealPlanTable.innerHTML = ""; // Clear previous meals
+
+            Object.keys(meals[selectedDiet]).forEach(day => {
+                let row = mealPlanTable.insertRow();
+                let totalCalories = 0;
+
+                row.insertCell(0).innerText = day; // Day column
+                
+                meals[selectedDiet][day].forEach(mealData => {
+                    let mealCell = row.insertCell();
+                    mealCell.innerHTML = `${mealData.meal} <br> <span class="calories">${mealData.calories} kcal</span>`;
+                    totalCalories += mealData.calories;
+                });
+
+                let totalCalorieCell = row.insertCell();
+                totalCalorieCell.innerHTML = `<span class="calories">${totalCalories} kcal</span>`;
+            });
+        }
+    </script>
+    <section id="waterTracker" class="tab">
+        <h2>Water Intake Tracker</h2>
+        <p>Water Consumed: <span id="waterCount">0</span> ml</p>
+        <button onclick="addWater()">Drink 250ml</button>
+    </section>
+
+   
+
+</body>
+</html>
